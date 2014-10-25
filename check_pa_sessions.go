@@ -15,6 +15,8 @@ func main() {
 		timeout   int64
 		warning   int64
 		critical  int64
+		min       int64
+		max       int64
 		mode      string
 	)
 
@@ -22,8 +24,11 @@ func main() {
 	flag.StringVar(&community, "community", "public", "SNMP community string")
 	flag.Int64Var(&timeout, "timeout", 10, "SNMP connection timeout")
 
-	flag.Int64Var(&warning, "warning", 10000, "Warning threshold value")
-	flag.Int64Var(&critical, "critical", 10000, "Critical threshold value")
+	flag.Int64Var(&warning, "warning", 60000, "Warning threshold value")
+	flag.Int64Var(&critical, "critical", 80000, "Critical threshold value")
+
+	flag.Int64Var(&min, "min", 0, "Minimum value of control")
+	flag.Int64Var(&max, "max", 250000, "Maximum value of control")
 
 	flag.StringVar(&mode, "mode", "tcp-sessions", "Specify session mode. tcp, udp, icmp, or total")
 
@@ -68,7 +73,7 @@ func main() {
 		return
 	}
 
-	check.AddPerfDatum(perf, "", float64(sessions), float64(warning), float64(critical))
+	check.AddPerfDatum(perf, "", float64(sessions), float64(warning), float64(critical), float64(min), float64(max))
 
 	crit, _, _, err := parseRange(critical, sessions)
 	if err != nil {

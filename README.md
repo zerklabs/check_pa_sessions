@@ -10,6 +10,8 @@ Usage of check_pa_sessions:
   -H="127.0.0.1": Target host
   -community="public": SNMP community string
   -critical=10000: Critical threshold value
+  -max=250000: Maximum value of control
+  -min=0: Minimum value of control
   -mode="tcp-sessions": Specify session mode. tcp, udp, icmp, or total
   -timeout=10: SNMP connection timeout
   -warning=10000: Warning threshold value
